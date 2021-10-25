@@ -1,4 +1,4 @@
-package guru.springframework.spring5recipeapp.domain;
+package guru.springframework.domain;
 
 /**
  * Created by M.Şahin on 25/10/2021

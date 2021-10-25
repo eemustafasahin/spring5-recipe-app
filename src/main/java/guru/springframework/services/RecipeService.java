@@ -1,6 +1,6 @@
-package guru.springframework.spring5recipeapp.services;
+package guru.springframework.services;
 
-import guru.springframework.spring5recipeapp.domain.Recipe;
+import guru.springframework.domain.Recipe;
 
 import java.util.Set;
 

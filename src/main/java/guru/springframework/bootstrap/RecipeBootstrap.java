@@ -1,9 +1,9 @@
-package guru.springframework.spring5recipeapp.bootstrap;
+package guru.springframework.bootstrap;
 
-import guru.springframework.spring5recipeapp.domain.*;
-import guru.springframework.spring5recipeapp.repositories.CategoryRepository;
-import guru.springframework.spring5recipeapp.repositories.RecipeRepository;
-import guru.springframework.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import guru.springframework.domain.*;
+import guru.springframework.repositories.CategoryRepository;
+import guru.springframework.repositories.UnitOfMeasureRepository;
+import guru.springframework.repositories.RecipeRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;

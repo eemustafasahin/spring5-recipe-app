@@ -1,6 +1,6 @@
-package guru.springframework.spring5recipeapp.controllers;
+package guru.springframework.controllers;
 
-import guru.springframework.spring5recipeapp.services.RecipeService;
+import guru.springframework.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
