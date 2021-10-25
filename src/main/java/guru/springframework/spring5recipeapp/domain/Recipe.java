@@ -1,6 +1,7 @@
 package guru.springframework.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,30 +16,50 @@ public class Recipe {
     private Long id;
 
     private String description;
-    private Integer predTime;
+    private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
-    private String direction;
+
+    @Lob //contains both clob (character large objects and binary large objects)
+    private String directions; //except char and string related fields, all fields
+                                //defaults to blob (binary large objects)
+    //so above declaration directions are text. (clob)
 
     @Lob
-    private Byte [] image;
+    private Byte [] image; //but here image is blob cuz declaration is done by Byte...
 
     @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty;
+    private Difficulty difficulty; //ordinary var char (255) variable but get info
+                                //as enum and EnumType.STRING is used in db.
 
+    /*
+        this side has cascade operation because we want to cascade from this side to
+        child side.
+
+        So, We want one recipe is deleted, all notes is deleted related to that recipe.
+
+        But we dont want deletion of recipe when notes are deleted. this does not make
+        sense.
+     */
     @OneToOne(cascade = CascadeType.ALL)
-    private Notes notes;
+    private Notes notes;        //both sides have fk of each other (Notes)
+                            //fk -> Notes id (pk)
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") //ordinary one to many rs
+    private Set<Ingredient> ingredients = new HashSet<>(); //this side does not hold fk
 
-    @ManyToMany
-    @JoinTable(name = "recipe_category",
-    joinColumns = @JoinColumn(name = "recipe_id"),
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    /*
+        recipe_id -> fk to recipe table
+        category_id -> fk to category table
+        recipe_id + category_id -> pk of recipe_category table
+     */
+    @ManyToMany     //this is not owning side and not mappedBy side. Owning side is join table.
+    @JoinTable(name = "recipe_category",  //specify join table characteristics and column names
+    joinColumns = @JoinColumn(name = "recipe_id"), //pk of recipe is going to recipe_category as fk
+    inverseJoinColumns = @JoinColumn(name = "category_id"))//pk of category is going to recipe_category as fk
+    private Set<Category> categories = new HashSet<>(); //dont forget to init collections not to take npe
 
     public Long getId()
     {
@@ -60,14 +81,14 @@ public class Recipe {
         this.description = description;
     }
 
-    public Integer getPredTime()
+    public Integer getPrepTime()
     {
-        return predTime;
+        return prepTime;
     }
 
-    public void setPredTime(Integer predTime)
+    public void setPrepTime(Integer predTime)
     {
-        this.predTime = predTime;
+        this.prepTime = predTime;
     }
 
     public Integer getCookTime()
@@ -110,14 +131,14 @@ public class Recipe {
         this.url = url;
     }
 
-    public String getDirection()
+    public String getDirections()
     {
-        return direction;
+        return directions;
     }
 
-    public void setDirection(String direction)
+    public void setDirections(String direction)
     {
-        this.direction = direction;
+        this.directions = direction;
     }
 
     public Byte[] getImage()
@@ -138,6 +159,14 @@ public class Recipe {
     public void setNotes(Notes notes)
     {
         this.notes = notes;
+        notes.setRecipe(this); //for sync helper
+    }
+
+    public Recipe addIngredient(Ingredient ingredient){ //helper method for sync
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+
+        return this;
     }
 
     public Difficulty getDifficulty()

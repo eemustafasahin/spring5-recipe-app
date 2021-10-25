@@ -7,17 +7,18 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Notes {
+public class Notes { //this is bidirectional one to one table because both side has
+                    //relationship annotations
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Recipe recipe;
+    @OneToOne       //both sides have fk of each other (Notes)
+    private Recipe recipe;  //fk -> Notes id (pk)
 
     @Lob
-    private String recipeNotes;
+    private String recipeNotes; //this is text type used for large strings
 
     public Long getId()
     {

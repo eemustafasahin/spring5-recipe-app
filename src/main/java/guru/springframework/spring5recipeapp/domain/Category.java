@@ -1,6 +1,7 @@
 package guru.springframework.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,10 +13,10 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
+    private String description; //by default varchar (255 len)
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Recipe> recipes;
+    @ManyToMany(mappedBy = "categories") //mappedBy side a.k.a inverse side
+    private Set<Recipe> recipes = new HashSet<>(); //this does not exists in category table but in join table
 
     public Long getId()
     {

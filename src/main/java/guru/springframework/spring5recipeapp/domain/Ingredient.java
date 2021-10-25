@@ -14,13 +14,32 @@ public class Ingredient {
     private Long id;
 
     private String description;
-    private BigDecimal amount;
+    private BigDecimal amount; //numeric type in postgresql
 
     @ManyToOne
-    private Recipe recipe;
+    private Recipe recipe; //this side holds fk to recipe
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private UnitOfMeasure uom;
+    @OneToOne(fetch = FetchType.EAGER) //this side holds fk to uom.
+    private UnitOfMeasure uom; //unidirectional from this side so fk is in here.
+
+    public Ingredient()
+    {
+
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.uom = uom;
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe)
+    {
+        this.description = description;
+        this.amount = amount;
+        this.recipe = recipe;
+        this.uom = uom;
+    }
 
     public Long getId()
     {
