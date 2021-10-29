@@ -1,11 +1,15 @@
 package guru.springframework.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
  * Created by M.Şahin on 25/10/2021
  */
 
+@Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes { //this is bidirectional one to one table because both side has
                     //relationship annotations
@@ -20,33 +24,4 @@ public class Notes { //this is bidirectional one to one table because both side 
     @Lob
     private String recipeNotes; //this is text type used for large strings
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public Recipe getRecipe()
-    {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe)
-    {
-        this.recipe = recipe;
-    }
-
-    public String getRecipeNotes()
-    {
-        return recipeNotes;
-    }
-
-    public void setRecipeNotes(String recipeNotes)
-    {
-        this.recipeNotes = recipeNotes;
-    }
 }

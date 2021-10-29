@@ -1,10 +1,13 @@
 package guru.springframework.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
  * Created by M.Şahin on 25/10/2021
  */
+@Data
 @Entity
 public class UnitOfMeasure { //not a bidirectional relationship and there
                             //there is no relationship annotations here
@@ -16,25 +19,5 @@ public class UnitOfMeasure { //not a bidirectional relationship and there
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
 
 }
