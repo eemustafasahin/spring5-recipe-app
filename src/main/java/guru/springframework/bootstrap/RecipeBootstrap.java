@@ -18,8 +18,9 @@ import java.util.Optional;
 /**
  * Created by jt on 6/13/17.
  */
-@Component
 @Slf4j
+@Component
+
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
@@ -39,7 +40,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
         recipeRepository.saveAll(getRecipes());
-        log.debug("Logging bootstrap data");
+        log.info("Logging bootstrap data");
     }
 
     private List<Recipe> getRecipes() {
