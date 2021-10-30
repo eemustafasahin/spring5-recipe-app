@@ -5,8 +5,15 @@ import guru.springframework.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import java.util.HashSet;
@@ -16,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 /**
  * Created by M.Şahin on 30/10/2021
@@ -38,6 +47,16 @@ class IndexControllerTest {
         MockitoAnnotations.openMocks(this);
         //initialize unit that we want to test to set up environment
         m_controller = new IndexController(m_recipeService);
+    }
+
+    @Test
+    void testMockMVC() throws Exception
+    {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(m_controller).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/index.html"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"));
     }
 
     @Test
