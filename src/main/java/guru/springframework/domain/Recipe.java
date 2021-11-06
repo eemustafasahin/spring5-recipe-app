@@ -64,11 +64,11 @@ public class Recipe {
     inverseJoinColumns = @JoinColumn(name = "category_id"))//pk of category is going to recipe_category as fk
     private Set<Category> categories = new HashSet<>(); //dont forget to init collections not to take npe
 
-
-    public void setNotes(Notes notes)
-    {
-        this.notes = notes;
-        notes.setRecipe(this); //for sync helper
+    public void setNotes(Notes notes) {
+        if (notes != null) {
+            this.notes = notes;
+            notes.setRecipe(this);
+        }
     }
 
     public Recipe addIngredient(Ingredient ingredient){ //helper method for sync
